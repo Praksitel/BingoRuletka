@@ -4,13 +4,8 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity implements View.OnTouchListener {
@@ -42,7 +37,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     float moveBigBeginX;
     float moveBigBeginY;
 
-    double smallAVOTA = 0;
+    //double smallAVOTA = 0;
 
     float x;
     float y;
@@ -65,7 +60,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         prevIV = null;
 
         // регистрируем контекстное меню для компонента tv
-        registerForContextMenu(ivBig);
+        //registerForContextMenu(ivBig);
 
         ivBig.setOnTouchListener(this);
         ivSmall.setOnTouchListener(this);
@@ -127,6 +122,9 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         int resangle;
         double trip;
 
+        long t = event.getEventTime();
+        long d = event.getDownTime();
+
         x = event.getX();
         y = event.getY();
         float normX = x - 333;
@@ -164,7 +162,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                     time = currentMoveTime - moveSmallBeginTime;
 
                     angle = (float) Math.toDegrees(Math.atan((double)normY/normX)-Math.atan((double)moveSmallBeginY/moveSmallBeginX));
-                    smallAVOTA += angle*1.6;
+                    double smallAVOTA = angle*1.6;
                     //loa = (int) smallAVOTA % halfAngle;
                     //loai = (int) smallAVOTA / halfAngle;
                     //resangle = loai * halfAngle + (loa<5 ? 0 : halfAngle);
@@ -183,7 +181,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                     } else if (smallMoveSpeed > lowSpeed) {
                         time *= 2;
                     }
-                    Log.e("BRul", "angle: " + angle + "\tavota=" + smallAVOTA + "\tresangle=" + resangle + "\ttime: " + time + "\tx=" + x + "," + normX + "," + moveSmallBeginX + "\ty=" + y + "," + normY + "," + moveSmallBeginY + "\tmoveSpeed=" + smallMoveSpeed);
+                    Log.e("BRul", "angle: " + angle + "\tavota=" + smallAVOTA + "\tresangle=" + resangle + "\ttime: " + time + "\tt=" + t+ "\td=" + d + "\tx=" + x + "," + normX + "," + moveSmallBeginX + "\ty=" + y + "," + normY + "," + moveSmallBeginY + "\tmoveSpeed=" + smallMoveSpeed);
                     if (resangle != 0) {
                         //Log.e("BRul", "angle: " + angle + "\ttime: " + time + "\tx=" + x + "," + moveSmallBeginX + "\ty=" + y + "," + moveSmallBeginY + "\tavota=" + smallAVOTA + "\tloa=" + loa + "\tloai=" + loai + "\tresangle=" + resangle + "\tmoveSpeed=" + smallMoveSpeed);
                         //Log.e("BRul", "angle: " + angle + "\tavota=" + smallAVOTA + "\tresangle=" + resangle + "\ttime: " + time + "\tx=" + normX + "," + moveSmallBeginX + "\ty=" + normY + "," + moveSmallBeginY + "\tmoveSpeed=" + smallMoveSpeed);
@@ -192,7 +190,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                         anim.start();
                     }
 
-                    smallAVOTA = 0;
+                    //smallAVOTA = 0;
                     moveSmallBeginX = normX;
                     moveSmallBeginY = normY;
                     smallLastAngle = newSmallLastAngle;
